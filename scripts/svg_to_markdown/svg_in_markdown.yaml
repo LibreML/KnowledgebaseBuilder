@@ -1,0 +1,39 @@
+openapi: 3.0.0
+info:
+  title: Vector Graphic Generation API
+  version: 1.0.0
+  description: API to generate vector graphics from SVG strings.
+servers:
+  - url: https://api.jamesdavidclarke.com/
+
+paths:
+  /gpt/vector_graphic/generate:
+    get:
+      operationId: generateVectorGraphic
+      summary: Generate a vector graphic
+      description: Generates a vector graphic from a given SVG name and SVG string.
+      parameters:
+        - name: svg_name
+          in: query
+          required: true
+          description: The name for the SVG.
+          schema:
+            type: string
+        - name: svg_str
+          in: query
+          required: true
+          description: The SVG string in HTML tag format.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully generated vector graphic in Markdown format.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "![Test](data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=)"
+        "400":
+          description: Bad Request - Invalid parameters provided.
+        "500":
+          description: Internal Server Error
